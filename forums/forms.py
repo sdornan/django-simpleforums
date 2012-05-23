@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.forms.models import inlineformset_factory
 
-from proto.forums.models import Thread, Post
+from forums.models import Thread, Post
 
 
 class ThreadForm(ModelForm):

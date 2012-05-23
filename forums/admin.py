@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from proto.forums.models import Forum, Thread, Post
+from forums.models import Forum, Thread, Post
 
 
 class ForumAdmin(admin.ModelAdmin):

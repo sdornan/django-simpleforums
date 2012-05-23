@@ -1,7 +1,7 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 
-from proto.accounts.models import User
-from proto.forums.models import Forum, Thread, Post
+from forums.models import Forum, Thread, Post
 
 
 class ForumModelsTestCase(TestCase):

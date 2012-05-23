@@ -9,7 +9,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.timezone import now
 
-from proto.common.fields import AutoSlugField
+from autoslug import AutoSlugField
 
 
 # CACHE KEYS

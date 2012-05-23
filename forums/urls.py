@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, url
 
-from proto.forums.views import ForumListView, ThreadListView, PostListView
+from forums.views import ForumListView, ThreadListView, PostListView
 
 
-urlpatterns = patterns('proto.forums.views',
+urlpatterns = patterns('forums.views',
     url(r'^(?P<forum_slug>[-\w]+)/create-thread/$', 'create_thread', name='create-thread'),
     url(r'^(?P<forum_slug>[-\w]+)/(?P<thread_slug>[-\w]+)/process-post/$', 'process_post_form', name='process-post'),
     url(r'^(?P<forum_slug>[-\w]+)/(?P<thread_slug>[-\w]+)/$', PostListView.as_view(), name='post-list'),
