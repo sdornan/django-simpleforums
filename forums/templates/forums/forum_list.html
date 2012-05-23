@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block head_title %}Forums{% endblock %}
+
+{% block content %}
+<ul class="breadcrumb">
+  <li class="active">
+    Forums
+  </li>
+</ul>
+
+{% if object_list %}
+  <table class="table">
+
+    <thead>
+      <tr>
+        <th>Forum</th>
+        <th>Last Post</th>
+        <th>Threads</th>
+        <th>Posts</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for object in object_list %}
+      <tr>
+        <td><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></td>
+        {% with last_post=object.get_last_post %}
+          <td>
+          {% if last_post %}
+            <a href="{{ last_post.thread.get_absolute_url }}">{{ last_post.thread }}</a>
+            by {{ last_post.author }}
+            {{ last_post.created|date:"DATETIME_FORMAT" }}
+          {% endif %}
+          </td>
+        {% endwith %}
+        <td>{{ object.num_threads }}</td>
+        <td>{{ object.num_posts }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+
+  </table>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% if post.id %}
+<form action="{% url process-post post.thread.forum.slug post.thread.slug post.id %}" method="post" class="post_form">
+{% else %}
+<form action="{% url process-post thread.forum.slug thread.slug %}" method="post" class="post_form">
+{% endif %}
+	{% csrf_token %}
+	{{ post_form }}
+	<p><input type="submit" name="submit" value="Post" class="btn" /></p>
+</form>

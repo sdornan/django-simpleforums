@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ thread.title }}{% endblock %}
+
+{% block content %}
+<ul class="breadcrumb">
+  <li>
+    <a href="{% url forum-list %}">Forums</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="{{ thread.forum.get_absolute_url }}">{{ thread.forum.title }}</a> <span class="divider">/</span>
+  </li>
+  <li class="active">
+    {{ thread.title }}
+  </li>
+</ul>
+
+{% if object_list %}
+  <table class="table table-bordered table-striped">
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td width="15%">
+            <center>
+              {% if object.author.userprofile.avatar %}
+                <img src="{{ object.author.userprofile.avatar.url }}" width="90" />
+              {% else %}
+                <img src="{{ STATIC_URL }}accounts/img/default_avatar.jpg" width="90" />
+              {% endif %}
+              <br />
+              <a href="{% url user-detail object.author.username %}">{{ object.author }}</a>
+              <br />
+              {{ object.created|date:"SHORT_DATETIME_FORMAT" }}
+              <br />
+              {% if object.author == request.user and object.editable %}
+                <a href="{% url ajax-post-form object.id %}" id="post-edit-{{ object.id }}" class="post-edit">Edit</a>
+              {% endif %}
+            </center>
+          </td>
+          <td id="post-body-{{ object.id }}" class="post-body">{{ object.body }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
+{% if paginator %}
+  {% include "_pagination.html" %}
+{% endif %}
+
+{% include "forums/post_form.html" %}
+{% endblock %}
+
+{% block extra_script %}
+  <script src="{{ STATIC_URL }}forums/js/forums.js"></script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block head_title %}New Thread{% endblock %}
+
+{% block content %}
+<ul class="breadcrumb">
+  <li>
+    <a href="{% url forum-list %}">Forums</a> <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="{{ forum.get_absolute_url }}">{{ forum.title }}</a> <span class="divider">/</span>
+  </li>
+  <li class="active">
+    New Thread
+  </li>
+</ul>
+
+<form action="." method="post" class="thread_form">{% csrf_token %}
+{{ form }}
+{{ post_formset }}
+<p>
+  <input type="submit" name="submit" value="Create Thread" class="btn btn-primary" />
+  <a href="{{ forum.get_absolute_url }}"><input type="button" name="cancel" value="Cancel" class="btn" /></a>
+</p>
+</form>
+{% endblock %}

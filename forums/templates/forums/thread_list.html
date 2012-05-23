@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block head_title %}{{ forum.title }}{% endblock %}
+
+{% block content %}
+<ul class="breadcrumb">
+  <li>
+    <a href="{% url forum-list %}">Forums</a> <span class="divider">/</span>
+  </li>
+  <li class="active">
+    {{ forum.title }}
+  </li>
+</ul>
+
+<a href="{% url create-thread forum.slug %}" class="btn btn-primary">Create Thread</a>
+
+<br />
+<br />
+
+{% if object_list %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Thread</th>
+        <th>Creator</th>
+        <th>Last Post</th>
+        <th>Replies</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></td>
+          <td>{{ object.creator }}</td>
+          {% with last_post=object.get_last_post %}
+            <td>{{ last_post.created|date:"SHORT_DATETIME_FORMAT" }} by {{ last_post.author }}</td>
+          {% endwith %}
+          <td>{{ object.num_posts|add:"-1" }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
+<br />
+<br />
+
+{% if paginator %}
+  {% include "_pagination.html" %}
+{% endif %}
+
+{% endblock %}
