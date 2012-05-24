@@ -9,7 +9,7 @@ setup(
     author='Sam Dornan',
     author_email='sdornan@gmail.com',
     url='https://github.com/sdornan/django-simpleforums/',
-    packages=['django-modelutils', 'django-pure-pagination'],
+    packages=['django-autoslug', 'django-pure-pagination'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
