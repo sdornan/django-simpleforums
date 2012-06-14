@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block body %}
+  <body>
+    <section id="content" class="container">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert{% if message.tags %} alert-{{ message.tags }}"{% endif %}>
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            {{ message|safe }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% block content %}
+      {% endblock %}
+    </section>
+
+    {% block extra_script %}
+    {% endblock %}
+  </body>
+{% endblock %}

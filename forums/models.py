@@ -43,7 +43,7 @@ class Forum(models.Model):
             'forum_slug': self.slug})
 
     def get_last_post(self):
-        # Caches the last post so that we don't have to perform a database query for each forum on the forum list
+        # Caches the last post so that we don't have to perform a database query for each forum in the forum list
         last_post = cache.get(FORUM_LAST_POST_KEY % self.pk)
 
         if last_post is None:
@@ -77,7 +77,7 @@ class Thread(models.Model):
             'thread_slug': self.slug})
 
     def get_last_post(self):
-        # Caches the last post so that we don't have to perform a database query for each thread on the thread list
+        # Caches the last post so that we don't have to perform a database query for each thread in the thread list
         last_post = cache.get(THREAD_LAST_POST_KEY % self.pk)
         if last_post is None:
             last_post = self.post_set.select_related('author').latest()
