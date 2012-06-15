@@ -1,6 +1,5 @@
+from django.conf import settings
 from django.contrib.auth.models import User
-# from django.contrib.contenttypes import generic
-# from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.core.cache import cache
@@ -11,6 +10,8 @@ from django.utils.timezone import now
 
 from autoslug import AutoSlugField
 
+FORUMS_CACHE_LENGTH = getattr(settings, 'FORUMS_CACHE_LENGTH', 60 * 60 * 24)  # 24 hours by default
+FORUMS_EDITABLE_LENGTH = getattr(settings, 'FORUMS_EDITABLE_LENGTH', 5 * 60)  # 5 minutes by default
 
 # CACHE KEYS
 FORUM_LAST_POST_KEY = 'forums:forum:last_post:%i'
@@ -21,9 +22,6 @@ class Forum(models.Model):
     title = models.CharField(max_length=70)
     description = models.CharField(max_length=100)
     slug = AutoSlugField(populate_from='title')
-    # content_type = models.ForeignKey(ContentType)
-    # object_id = models.PositiveIntegerField()
-    # content_object = generic.GenericForeignKey('content_type', 'object_id')
     site = models.ForeignKey(Site)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -51,7 +49,7 @@ class Forum(models.Model):
                 last_post = Post.objects.filter(thread__forum=self).select_related('thread', 'author', 'thread__forum').latest()
             except Post.DoesNotExist:
                 last_post = None
-            cache.set(FORUM_LAST_POST_KEY % self.pk, last_post, 60 * 60 * 24)  # 24 hours
+            cache.set(FORUM_LAST_POST_KEY % self.pk, last_post, FORUMS_CACHE_LENGTH)
 
         return last_post
 
@@ -81,7 +79,7 @@ class Thread(models.Model):
         last_post = cache.get(THREAD_LAST_POST_KEY % self.pk)
         if last_post is None:
             last_post = self.post_set.select_related('author').latest()
-            cache.set(THREAD_LAST_POST_KEY % self.pk, last_post, 60 * 60 * 24)  # 24 hours
+            cache.set(THREAD_LAST_POST_KEY % self.pk, last_post, FORUMS_CACHE_LENGTH)
         return last_post
 
 
@@ -100,7 +98,7 @@ class Post(models.Model):
 
     @property
     def editable(self):
-        if (now() - self.created).seconds < (5 * 60):  # 5 minutes
+        if (now() - self.created).seconds < FORUMS_EDITABLE_LENGTH:
             return True
         return False
 

@@ -10,3 +10,7 @@ This code was moved into this repository from a larger Django project that I cre
 3. Create the database tables: `python manage.py syncdb`
 4. Add `url(r'^forums/', include('forums.urls'))` to your project's base urls.py file
 
+## Settings
+There are a few settings that you can set. These each have sane defaults that will be used if you choose not to set them.
+* FORUMS_CACHE_LENGTH - how long to cache the last post values that are displayed per forum/thread. (Default: 24 hours)
+* FORUMS_EDITABLE_LENGTH - how long after posting can a user edit their post. (Default: 5 minutes)
