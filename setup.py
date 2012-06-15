@@ -18,7 +18,6 @@ setup(
         'Framework :: Django',
     ],
     install_requires=[
-        "Django >= 1.4",
         "django-autoslug >= 1.5.0",
         "django-pure-pagination >= 0.1"
     ],
