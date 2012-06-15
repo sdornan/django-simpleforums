@@ -15,6 +15,6 @@ There are a few settings that you can set. These each have sane defaults that wi
 * FORUMS_CACHE_LENGTH - how long to cache the last post values that are displayed per forum/thread. (Default: 24 hours)
 * FORUMS_EDITABLE_LENGTH - how long after posting can a user edit their post. (Default: 5 minutes)
 
-## TODO
+## TODOs
 * Make the user avatar locations a definable setting instead of hardcoding them in the templates. Right now, the templates expect the user avatars to be an ImageField called 'avatar' on the UserProfile.
 * The templates were built with [Bootstrap](https://github.com/twitter/bootstrap) in mind. Not sure if I should include some minimal CSS directly in the app, or if it should be left up to the user.
